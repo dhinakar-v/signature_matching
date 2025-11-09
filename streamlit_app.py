@@ -8,10 +8,8 @@ from langchain_core.messages import HumanMessage
 from langchain_openai import AzureChatOpenAI
 from PIL import Image
 
-# Load environment variables
 load_dotenv()
 
-# Page configuration (no sidebar)
 st.set_page_config(page_title="Signature Comparison Tool", page_icon="✍️", layout="wide")
 
 # --- Header ---
@@ -47,7 +45,7 @@ with col1:
     )
     if signature1:
         img1 = Image.open(signature1)
-        st.image(img1, caption="Signature 1", use_container_width=True)
+        st.image(img1, caption="Signature 1")
 
 with col2:
     st.subheader("📝 Signature 2")
@@ -56,7 +54,7 @@ with col2:
     )
     if signature2:
         img2 = Image.open(signature2)
-        st.image(img2, caption="Signature 2", use_container_width=True)
+        st.image(img2, caption="Signature 2")
 
 # --- Compare Button ---
 st.markdown("---")
@@ -82,37 +80,37 @@ if st.button("🔍 Compare Signatures", type="primary", use_container_width=True
 
                 # Formatted prompt
                 prompt = """
-You are an expert in signature verification and forensic handwriting analysis.
+                    You are an expert in signature verification and forensic handwriting analysis.
 
-Analyze the two uploaded signature images and respond in **structured Markdown format** with the following sections:
+                    Analyze the two uploaded signature images and respond in **structured Markdown format** with the following sections:
 
-### 🧮 Similarity Score
-Provide a **score between 0 and 100**, where:
-- 90–100 → Nearly identical (same person)
-- 70–89 → Very similar (likely same person)
-- 50–69 → Moderately similar (possibly same person)
-- 30–49 → Some resemblance but notable differences
-- 0–29 → Very different (likely different people)
+                    ### 🧮 Similarity Score
+                    Provide a **score between 0 and 100**, where:
+                    - 90–100 → Nearly identical (same person)
+                    - 70–89 → Very similar (likely same person)
+                    - 50–69 → Moderately similar (possibly same person)
+                    - 30–49 → Some resemblance but notable differences
+                    - 0–29 → Very different (likely different people)
 
-### ✍️ Detailed Comparison
-Compare and describe:
-- Overall shape and flow  
-- Letter formation and style  
-- Slant and angle consistency  
-- Pressure and line thickness  
-- Spacing and proportion  
-- Unique features or flourishes
+                    ### ✍️ Detailed Comparison
+                    Compare and describe:
+                    - Overall shape and flow  
+                    - Letter formation and style  
+                    - Slant and angle consistency  
+                    - Pressure and line thickness  
+                    - Spacing and proportion  
+                    - Unique features or flourishes
 
-### ⚠️ Observed Differences or Issues
-List specific discrepancies or anomalies such as:
-- Hesitation, tremors, or uneven flow  
-- Different slants or stroke directions  
-- Extra/missing loops or strokes  
-- Size or spacing inconsistencies  
-- Potential signs of forgery
+                    ### ⚠️ Observed Differences or Issues
+                    List specific discrepancies or anomalies such as:
+                    - Hesitation, tremors, or uneven flow  
+                    - Different slants or stroke directions  
+                    - Extra/missing loops or strokes  
+                    - Size or spacing inconsistencies  
+                    - Potential signs of forgery
 
-Make sure your answer is **clearly formatted** in Markdown and uses bullet points and section headers.
-"""
+                    Make sure your answer is **clearly formatted** in Markdown and uses bullet points and section headers.
+                """
 
                 # Create chat message
                 message = HumanMessage(
